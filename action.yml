@@ -1,4 +1,4 @@
-name: 'nx-affected-projects'
+name: 'action-nx-affected'
 description: 'Github action for outputting a list of affected nx projects (apps and libs)'
 inputs:
     base:
