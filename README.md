@@ -1,4 +1,4 @@
-# nx-affected-projects
+# action-nx-affected
 Github action for outputting a list of affected nx projects (apps and libs)
 
 ### Action inputs
@@ -40,7 +40,7 @@ outputs:
 ### Usage
 ``` yaml
       - name: Check for Affected Projects
-        uses: 2coo/nx-affected-projects@v1
+        uses: 2coo/action-nx-affected@v1
         id: checkForAffected
         with:
             exclude: some_package
