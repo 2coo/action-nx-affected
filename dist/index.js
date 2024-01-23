@@ -48,11 +48,12 @@ function run(workspace = '.') {
             const { GITHUB_WORKSPACE = workspace } = process.env;
             const base = core.getInput('base');
             const head = core.getInput('head');
+            const exclude = core.getInput('exclude');
             core.info(`using dir: ${GITHUB_WORKSPACE}`);
             const apps = (0, nx_1.getNxAffected)({
                 base,
                 head,
-                exclude: 'libs/**',
+                exclude: `libs/**,packages/**,${exclude}`,
                 workspace: GITHUB_WORKSPACE
             });
             core.setOutput('affectedApps', apps);
@@ -61,7 +62,7 @@ function run(workspace = '.') {
             const libs = (0, nx_1.getNxAffected)({
                 base,
                 head,
-                exclude: 'apps/**',
+                exclude: `apps/**,${exclude}`,
                 workspace: GITHUB_WORKSPACE
             });
             core.setOutput('affectedLibs', libs);

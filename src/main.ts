@@ -6,13 +6,14 @@ export async function run(workspace = '.'): Promise<void> {
     const {GITHUB_WORKSPACE = workspace} = process.env
     const base = core.getInput('base')
     const head = core.getInput('head')
+    const exclude = core.getInput('exclude')
 
     core.info(`using dir: ${GITHUB_WORKSPACE}`)
 
     const apps = getNxAffected({
       base,
       head,
-      exclude: 'libs/**',
+      exclude: `libs/**,packages/**,${exclude}`,
       workspace: GITHUB_WORKSPACE
     })
     core.setOutput('affectedApps', apps)
@@ -22,7 +23,7 @@ export async function run(workspace = '.'): Promise<void> {
     const libs = getNxAffected({
       base,
       head,
-      exclude: 'apps/**',
+      exclude: `apps/**,${exclude}`,
       workspace: GITHUB_WORKSPACE
     })
     core.setOutput('affectedLibs', libs)
