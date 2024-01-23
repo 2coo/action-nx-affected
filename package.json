@@ -1,0 +1,50 @@
+{
+  "name": "nx-affected-projects",
+  "version": "1.0.0",
+  "description": "Github action for outputting a list of affected nx projects (apps and libs)",
+  "main": "lib/main.js",
+  "scripts": {
+    "nx": "nx",
+    "build": "tsc -p tsconfig.release.json",
+    "format": "prettier --write '**/*.ts'",
+    "format-check": "prettier --check '**/*.ts'",
+    "lint": "eslint src/**/*.ts",
+    "package": "ncc build --source-map --license licenses.txt",
+    "package:del": "ncc build --source-map --license licenses.txt && find ./dist/lib -mindepth 1 ! -name text -type d -not -path '.' -exec rm -rf {} + ",
+    "test": "jest",
+    "all": "npm run format && npm run lint && npm test && npm run build && npm run package",
+    "npm:check": "npx npm-check",
+    "build:check": "lines=`git diff --ignore-space-at-eol dist/ | wc -l`; if [ $lines -gt 1 ]; then echo \"Detected uncommitted changes after build.  See status below:\"; diff=`git diff --ignore-space-at-eol dist/`; echo $diff; echo ''; exit 1; fi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actions/nx-affected-projects.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "@vercel/ncc": "^0.36.1",
+    "eslint": "^8.40.0",
+    "eslint-plugin-github": "^4.7.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.8",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.4",
+    "yorkie": "^2.0.0"
+  },
+  "gitHooks": {
+    "pre-push": "if [[ $SKIP_HOOKS ]]; then exit 0; fi; npm run all && npm run build:check"
+  }
+}

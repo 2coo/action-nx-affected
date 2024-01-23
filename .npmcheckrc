@@ -1,0 +1,12 @@
+{
+  "depcheck": 
+  {
+    "ignoreMatches": 
+    [
+      "@actions/core",
+      "@types/*",
+      "npm-check-pr397",
+      "yorkie"
+    ]
+  }
+}
